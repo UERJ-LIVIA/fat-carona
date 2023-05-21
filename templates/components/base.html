@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html class="h-100" lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+        <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}"> <!-- Bootstrap 5.3 -->
+        <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
+        <script src="{% static 'js/jquery.js' %}"></script> <!-- jQuery 3.7 -->
+        <script src="{% static 'js/fetch-csrf.js' %}"></script> <!-- CSRF_TOKEN -->
+        <script src="{% static 'js/example.js' %}"></script>
+        <title>Caronas</title>
+    </head>
+    <body>
+        {% include "components/navbar.html" %}
+        <div class="container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+        <script src="{% static 'js/bootstrap/bootstrap.bundle.min.js' %}"></script> <!-- Bootstrap 5.3 -->
+    </body>
+</html>
