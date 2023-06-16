@@ -16,3 +16,20 @@ def cadastro(request):
 
     return  HttpResponseRedirect(request.META.get('login.html'))
 
+
+def login(request):
+    if request.method == 'POST':
+        nome = request.POST['nome']
+        password = request.POST['password']
+        user = auth(request, username=nome, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('login')
+        else:
+            error_message = 'Informações incorretas. Tente novamente.'
+            return render(request, 'login.html', {'error_message': error_message})
+        
+
+def deslogar(request):
+    logout(request)
+    return render(request, 'login.html')
