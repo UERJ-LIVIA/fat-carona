@@ -15,3 +15,4 @@ def cadastro(request):
                  auth.login(request,user)
 
     return  HttpResponseRedirect(request.META.get('login.html'))
+
