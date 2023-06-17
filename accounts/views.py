@@ -33,3 +33,30 @@ def login(request):
 def deslogar(request):
     logout(request)
     return render(request, 'login.html')
+
+
+  
+  
+  
+from . models import Profile
+from . forms import PerfilForm
+
+def atualizar_perfil(request):
+  
+    try:
+        perfil = Profile.objects.get(usuario=request.user)
+    except Profile.DoesNotExist:
+        perfil = None
+
+    if request.method == 'POST':
+        form = PerfilForm(request.POST, instance=perfil)
+        if form.is_valid():
+            perfil = form.save(commit=False)
+            perfil.usuario = request.user
+            perfil.save()
+        return redirect('atualizar_perfil.html')
+
+    else:
+        form = PerfilForm(instance=perfil)
+
+    return render(request, 'cadastro.html', {'form': form})
