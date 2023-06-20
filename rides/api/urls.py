@@ -1,9 +1,6 @@
 from django.urls import path
-
-from .views import (
-    exampleAPIView,
-)
+from rides.api.views import RideAPIView
 
 urlpatterns = [
-    path('example/', exampleAPIView.as_view()),
+    path('rides/', RideAPIView.as_view()),
 ]

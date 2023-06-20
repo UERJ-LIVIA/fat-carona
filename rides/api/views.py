@@ -1,42 +1,38 @@
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework import generics, mixins
+from rest_framework.views import APIView
 
 from ..models import Example
-from .serializers import ExampleSerializer
+from .serializers import RideAPISerializer
 
 
-class exampleAPIView(generics.GenericAPIView, 
-                    mixins.ListModelMixin,
-                    mixins.CreateModelMixin):
+# CONVERTED FUNCTION-BASED VIEW TO CLASS-BASED /
+# REFERENCE: https://www.django-rest-framework.org/tutorial/3-class-based-views/
+
+# FOR STATUS CODES, CHECK OUT: https://www.django-rest-framework.org/api-guide/status-codes/
+
+class RideAPIView(generics.GenericAPIView,
+                  mixins.ListModelMixin,
+                  mixins.CreateModelMixin):
 
     queryset = Example.objects.all()
-    serializer_class = ExampleSerializer
+    serializer_class = RideAPISerializer
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        # Convert date to proper format first or nah????
-        departure_date = request.data.get('departure_date')
+        queryset = Example.objects.all()
 
-        # If additional info is inputted by the user, it can be requested from here
-        additional_info = request.data.get('additional_info')
-        user = request.data.get('user')
+        # return self.create(request, *args, **kwargs)
 
-        # Create ride as a dictionary with the input user as the driver
-        ride_data = {
-            'departure_date': departure_date,
-            'additional_info': additional_info,
-            'driver': user
-        }
-
-        # https://www.django-rest-framework.org/api-guide/generic-views/#examples
-        # https://www.django-rest-framework.org/api-guide/serializers/
-        # https://www.django-rest-framework.org/api-guide/status-codes/
-        #
-        #   serializer = self.get_serializer(data=ride_data)
-        #   self.perform_create(serializer)
-        #
-        #   return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        return self.create(request, *args, **kwargs)
+        serializer_class = RideAPISerializer(queryset, many=True)
+        if serializer_class.is_valid():
+            serializer_class.save()
+            # response_msg = {'msg': 'TEST - SUCCESS'}
+            # return Response(response_msg)
+            return Response(serializer_class.data)
+        else:
+            # return Response({'msg': serializer_class.errors})
+            return Response(serializer_class.errors, status=status.HTTP_404_NOT_FOUND)
