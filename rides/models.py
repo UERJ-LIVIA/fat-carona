@@ -12,7 +12,7 @@ from accounts.models import Profile
 
 
 class Rides(mo.Model):
-    Profile = mo.ForeignKey(User, on_delete=mo.CASCADE)
+    profile = mo.ForeignKey(User, on_delete=mo.CASCADE)
     motorista = mo.ForeignKey(User,on_delete=mo.CASCADE,related_name='driver')
     passageiro = mo.ManyToManyField(User,related_name='passenger')
     data_publicaçao = mo.DateTimeField(datetime.datetime.now)

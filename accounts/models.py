@@ -1,16 +1,14 @@
-from django.db import models
-
-# Create your models here.
 from django.db import models as mo
 from django.contrib.auth.models import User
+from django.utils.translation import gettext as _
 
 # Create your models here.
 
 
 class Profile(mo.Model):
     class Genero(mo.TextChoices):
-        Opcao_1 = 'Masculino'
-        Opcao_2 = 'Feminino'
+     M = 'M', _('Masculino')
+     F = 'F', _('Feminino')
 
     user = mo.OneToOneField(User, on_delete=mo.CASCADE)
     nome = mo.CharField(max_length=20)
@@ -18,4 +16,4 @@ class Profile(mo.Model):
     email = mo.EmailField(max_length=50)
     matricula = mo.IntegerField(max_length=20)
     gender = mo.CharField(
-        max_length=12, choices=Genero.choices, default='Opcao_1')
+        max_length=12, choices=Genero.choices, default='Genero.M')
