@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from ..models import Example
+from ..models import Rides
 
 
 class RideAPISerializer(serializers.ModelSerializer):
@@ -8,7 +8,7 @@ class RideAPISerializer(serializers.ModelSerializer):
     date_formatted = serializers.SerializerMethodField()
 
     class Meta:
-        model = Example
+        model = Rides
         fields = '__all__'
 
     def date_format(self, obj):
