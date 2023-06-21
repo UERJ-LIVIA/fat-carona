@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate as auth, logout
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -27,36 +28,43 @@ def login(request):
             return redirect('login')
         else:
             error_message = 'Informações incorretas. Tente novamente.'
-            return render(request, 'login.html', {'error_message': error_message})
+            return  HttpResponseRedirect(request.META.get('login.html'))
         
 
 def deslogar(request):
     logout(request)
-    return render(request, 'login.html')
+    return HttpResponseRedirect(request.META.get('login.html'))
 
 
   
   
   
-from . models import Profile
-from . forms import PerfilForm
-
+## @login_required
 def atualizar_perfil(request):
-  
-    try:
-        perfil = Profile.objects.get(usuario=request.user)
-    except Profile.DoesNotExist:
-        perfil = None
+     if request.method == 'POST':
+        # Verifica se o usuário possui um perfil
+        try:
+            perfil = request.user.perfil
+        except perfil.DoesNotExist:
+            perfil = None
 
-    if request.method == 'POST':
-        form = PerfilForm(request.POST, instance=perfil)
-        if form.is_valid():
-            perfil = form.save(commit=False)
-            perfil.usuario = request.user
+        # Atualiza o perfil ou cria um novo
+        if perfil:
+            # Atualiza o perfil com base nos dados repassados
+            redirect(request,'atualizar_perfil.html')
+            perfil.campo1 = request.POST.get('campo1')
+            perfil.campo2 = request.POST.get('campo2')
             perfil.save()
-        return redirect('atualizar_perfil.html')
+         
+        else:
+            # Cria um novo perfil
+            redirect(request,'cadastro.html')
+            perfil = perfil.objects.create(
+                usuario=request.user,
+                campo1=request.POST.get('campo1'),
+                campo2=request.POST.get('campo2'),
+               )
+            
 
-    else:
-        form = PerfilForm(instance=perfil)
-
-    return render(request, 'cadastro.html', {'form': form})
+        # Redireciona o usuário para a mesma página
+        return HttpResponseRedirect(request.META.get('login.html'))
