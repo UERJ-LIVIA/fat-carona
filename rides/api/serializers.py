@@ -9,7 +9,12 @@ class RideAPISerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Rides
-        fields = '__all__'
+        fields = ['profile',
+                  'motorista',
+                  'passageiro',
+                  'data_publicaçao',
+                  'saida',
+                  'info']
 
     def date_format(self, obj):
         # Input for date must be standardized...

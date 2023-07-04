@@ -13,6 +13,9 @@ from .serializers import RideAPISerializer
 # FOR STATUS CODES, CHECK OUT: https://www.django-rest-framework.org/api-guide/status-codes/
 
 class RideAPIView(generics.GenericAPIView,
+                  mixins.RetrieveModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.DestroyModelMixin,
                   mixins.ListModelMixin,
                   mixins.CreateModelMixin):
 
@@ -24,6 +27,12 @@ class RideAPIView(generics.GenericAPIView,
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+
+    # def patch(self, request, *args, **kwargs):
+    #     return self.partial_update(request, *args, **kwargs)
+    #
+    # def delete(self, request, *args, **kwargs):
+    #     return self.destroy(request, *args, **kwargs)
 
         # queryset = Rides.objects.all()
         # serializer_class = RideAPISerializer(queryset, many=True)
