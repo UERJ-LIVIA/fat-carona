@@ -15,7 +15,7 @@ def cadastro(request):
                  user=User.obejects.create_user(request.POST['username'],password=request.POST['senha'],email=request.POST['email'])    
                  auth.login(request,user)
 
-    return  HttpResponseRedirect(request.META.get('login.html'))
+    return  HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def login(request):
@@ -28,12 +28,12 @@ def login(request):
             return redirect('login')
         else:
             error_message = 'Informações incorretas. Tente novamente.'
-            return  HttpResponseRedirect(request.META.get('login.html'))
+            return  HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
 
 def deslogar(request):
     logout(request)
-    return HttpResponseRedirect(request.META.get('login.html'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
   
@@ -67,4 +67,4 @@ def atualizar_perfil(request):
             
 
         # Redireciona o usuário para a mesma página
-        return HttpResponseRedirect(request.META.get('login.html'))
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
