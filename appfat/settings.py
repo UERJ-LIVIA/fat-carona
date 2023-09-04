@@ -135,8 +135,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 REST_FRAMEWORK = {
-    
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # numeros de objetos por pagina
-    'PAGE_SIZE': 1,
+    'PAGE_SIZE': 5,
 
     'DEFAULT_THROTTLE_CLASSES': (
         'rest_framework.throttling.UserRateThrottle',
@@ -155,10 +155,11 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
         # autentificação para iniciar sessão:
-        'rest_framework.authentication.SessionAuthentication',
+         'rest_framework.authentication.SessionAuthentication',
 
         # autentificação via Token:
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
 

@@ -11,6 +11,8 @@ class ExampleSerializer(serializers.ModelSerializer):
         model = Example
         fields = ('__all__')
 
+
+
 from accounts.models import Profile
 from rest_framework import serializers
 from Rides.models import Rides
