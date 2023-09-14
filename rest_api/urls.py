@@ -4,6 +4,7 @@ from rest_api.views import (RidesAPIView,
                             ProfileAPIView,
                             ProfilesAPIView,
                             PostProfileAPIView,
+                            DeleteProfileAPIView,
                             RidesFiltroAPIView,
                             RidesViewSet,
                             ProfileViewSet
@@ -27,7 +28,8 @@ urlpatterns = [
     path('rides/<int:ride_pk>/profiles/<int:profile_pk>',
          ProfileAPIView.as_view(), name='curso_profiles'),
     path('profiles/post', PostProfileAPIView.as_view(), name='profiles_post'),
-    path('profiles/del/', PostProfileAPIView.as_view(), name='profiles_del'),
+    path('profiles/<int:pk>/del/',
+         DeleteProfileAPIView.as_view(), name='profiles_del'),
     path('profiles/', ProfilesAPIView.as_view(), name='profiles'),
     path('profiles/<int:pk>/', ProfileAPIView.as_view(), name='profile')
 ]

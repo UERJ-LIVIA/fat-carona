@@ -77,8 +77,7 @@ class ProfilesAPIView(generics.ListCreateAPIView):
 
 
 class PostProfileAPIView(generics.GenericAPIView,
-                         mixins.DestroyModelMixin,
-                         mixins.CreateModelMixin
+                         mixins.CreateModelMixin,
                          ):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -93,13 +92,22 @@ class PostProfileAPIView(generics.GenericAPIView,
             diretorio=data['diretorio']
         )
         serializer = ProfileSerializer(new_profile, many=False)
-        return self.create(request, *args, **kwargs)
+        return Response(serializer.data, new_profile)
+
+
+class DeleteProfileAPIView(generics.GenericAPIView,
+                           mixins.DestroyModelMixin,
+                           mixins.CreateModelMixin):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    lookup_field = 'pk'
 
     def delete(self, request, *args, **kwargs):
         data = request.data
         profile_created = Profile.objects.delete(data)
         serializer = ProfileSerializer(data, many=False)
-        return self.destroy(request, *args, **kwargs)
+        return Response(serializer.data, profile_created)
 
 
 class ProfileAPIView(generics.RetrieveUpdateDestroyAPIView):
