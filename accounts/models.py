@@ -20,7 +20,7 @@ class Profile(mo.Model):
     email = mo.EmailField(max_length=50)
     matricula = mo.IntegerField()
     placa_carro = mo.CharField(max_length=7, null=True, blank=True)
-    cnh = mo.IntegerField(blank=True, null=True, default=10)
+    cnh = mo.IntegerField(blank=True, null=True)
     gender = mo.CharField(
         max_length=12, choices=Genero.choices, default='Genero.M')
     tipos = mo.CharField(max_length=12, choices=Tipos.choices,
