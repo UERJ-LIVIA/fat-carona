@@ -18,7 +18,7 @@ class CarregaDadosPassageirosSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['diretorio', 'user', 'email', 'senha', 'cnh', 'placa_carro']
 
 
 class RidesSerializer(serializers.ModelSerializer):

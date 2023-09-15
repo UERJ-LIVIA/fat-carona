@@ -12,7 +12,7 @@ from rest_framework.decorators import action
 from accounts.models import Profile
 from Rides.models import Ride
 from .serializers import RidesSerializer, ProfileSerializer, CarregaDadosPassageirosSerializer
-
+from django.contrib.auth.models import User
 """
 API de Rides (v1)
 """
@@ -85,11 +85,16 @@ class PostProfileAPIView(generics.GenericAPIView,
     def post(self, request, *args, **kwargs):
         data = request.data
         new_profile = Profile.objects.create(
-            user=data['user'],
             nome=data['nome'],
+            idade=data['idade'],
             email=data['email'],
-            senha=data['senha'],
-            diretorio=data['diretorio']
+            matricula=data['matricula'],
+            placa_carro=data['placa_carro'],
+            cnh=data['cnh'],
+            gender=data['gender'],
+            tipos=data['tipos'],
+            diretorio=data['diretorio'],
+            user=User.objects.get(pk=data['user'])
         )
         serializer = ProfileSerializer(new_profile, many=False)
         return Response(serializer.data, new_profile)
@@ -104,7 +109,7 @@ class DeleteProfileAPIView(generics.GenericAPIView,
     lookup_field = 'pk'
 
     def delete(self, request, *args, **kwargs):
-        data = request.data
+        data = Profile.objects.GET('profile_pk')
         profile_created = Profile.objects.delete(data)
         serializer = ProfileSerializer(data, many=False)
         return Response(serializer.data, profile_created)
