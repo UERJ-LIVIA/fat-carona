@@ -86,13 +86,10 @@ class PostProfileAPIView(generics.GenericAPIView,
         data = request.data
         new_profile = Profile.objects.create(
             nome=data['nome'],
-            idade=data['idade'],
             email=data['email'],
-            matricula=data['matricula'],
+            senha=data['senha'],
             placa_carro=data['placa_carro'],
             cnh=data['cnh'],
-            gender=data['gender'],
-            tipos=data['tipos'],
             diretorio=data['diretorio'],
             user=User.objects.get(pk=data['user'])
         )
@@ -109,7 +106,7 @@ class DeleteProfileAPIView(generics.GenericAPIView,
     lookup_field = 'pk'
 
     def delete(self, request, *args, **kwargs):
-        data = Profile.objects.GET('profile_pk')
+        data = Profile.objects.all(pk='profile_pk')
         profile_created = Profile.objects.delete(data)
         serializer = ProfileSerializer(data, many=False)
         return Response(serializer.data, profile_created)

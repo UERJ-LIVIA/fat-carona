@@ -14,12 +14,12 @@ class Profile(mo.Model):
         PASSAGEIRO = 'PASSAGEIRO', _('Passageiro')
         MOTORISTA = 'MOTORISTA', _('Motorista')
 
-    user = mo.OneToOneField(User, on_delete=mo.CASCADE)
+    user = mo.ForeignKey(User, on_delete=mo.CASCADE)
     nome = mo.CharField(User, max_length=20)
     idade = mo.IntegerField()
     email = mo.EmailField(max_length=50)
     matricula = mo.IntegerField()
-    placa_carro = mo.CharField(max_length=7, null=True, blank=True)
+    placa_carro = mo.CharField(max_length=8, null=True, blank=True)
     cnh = mo.IntegerField(blank=True, null=True)
     gender = mo.CharField(
         max_length=12, choices=Genero.choices, default='Genero.M')
