@@ -11,5 +11,4 @@ class RideAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'nome', 'idade', 'email',
-                    'matricula', 'gender', 'placa_carro', 'cnh')
+    list_display = ('user', 'nome', 'email', 'placa_carro', 'cnh', 'diretorio')
