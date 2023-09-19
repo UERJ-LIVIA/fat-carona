@@ -15,7 +15,7 @@ class Profile(mo.Model):
         MOTORISTA = 'MOTORISTA', _('Motorista')
 
     user = mo.ForeignKey(User, on_delete=mo.CASCADE)
-    nome = mo.CharField(User, max_length=20)
+    nome = mo.CharField(max_length=20)
     email = mo.EmailField(max_length=50)
     placa_carro = mo.CharField(max_length=8, null=True, blank=True)
     cnh = mo.IntegerField(blank=True, null=True)

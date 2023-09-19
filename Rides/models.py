@@ -14,8 +14,7 @@ class Ride(mo.Model):
 
     motorista = mo.ForeignKey(
         User, on_delete=mo.CASCADE, related_name='driver', blank=True, null=True)
-    passageiros = mo.ManyToManyField(
-        User, related_name='passenger', max_length=4)
+    passageiro = mo.ManyToManyField(User, related_name='passenger', null=True)
     data_publicaçao = mo.DateTimeField(default=datetime.now)
     data_saida = mo.DateTimeField(default=datetime.now)
     info = mo.TextField(max_length=200, blank=True)

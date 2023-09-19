@@ -1,5 +1,5 @@
 # DRF
-from rest_framework import APIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics, mixins
@@ -10,8 +10,8 @@ from rest_framework.decorators import action
 
 
 from accounts.models import Profile
-from Rides.models import Ride
-from .serializers import RidesSerializer, ProfileSerializer, CarregaDadosPassageirosSerializer
+from rides.models import Ride
+from .serializers import RidesSerializer, ProfileSerializer
 from django.contrib.auth.models import User
 """
 API de Rides (v1)
@@ -40,7 +40,8 @@ class RidesAPIView(generics.ListCreateAPIView):
 
 class RideAPIView(generics.GenericAPIView,
                   mixins.RetrieveModelMixin,
-                  mixins.DestroyModelMixin
+                  mixins.DestroyModelMixin,
+                  mixins.UpdateModelMixin
                   ):
 
     queryset = Ride.objects.all()
@@ -54,6 +55,9 @@ class RideAPIView(generics.GenericAPIView,
     def get(self, request, *args, **Kwargs):
         return self.retrieve(request, *args, **Kwargs)
 
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
 
 # metodo para filtrar caronas segundo usuario como passageiro
 class RidesFiltroAPIView(generics.ListAPIView):
@@ -61,8 +65,8 @@ class RidesFiltroAPIView(generics.ListAPIView):
     serializer_class = ProfileSerializer
 
     def get_queryset(self):
-        lista_filtro = self.request.GET.dict()
-        return Profile.objects.filter(**lista_filtro).all()
+        # filtrar pelo nome de cada perfil vinculado ao user
+        Ride.objects.filter(passageiros__profile__icontains='Nome').all()
 
 
 """
@@ -82,7 +86,7 @@ class PostProfileAPIView(generics.GenericAPIView,
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         data = request.data
         new_profile = Profile.objects.create(
             nome=data['nome'],
