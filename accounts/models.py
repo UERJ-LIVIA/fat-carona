@@ -21,7 +21,7 @@ class Profile(mo.Model):
     cnh = mo.IntegerField(blank=True, null=True)
     diretorio = mo. ImageField(upload_to=None, height_field=None,
                                width_field=None,  blank=False,
-                               default='/templates/static/logo_uerj1.jpg')
+                               default='/rides/static/img')
     senha = mo.CharField(max_length=50, default='*********')
     # gender = mo.CharField(
     #     max_length=12, choices=Genero.choices, default='Genero.M')
