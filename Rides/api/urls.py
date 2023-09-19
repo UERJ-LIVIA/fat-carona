@@ -1,5 +1,5 @@
 from django.urls import path
-from api.views import (RidesAPIView,
+from rides.api.views import (RidesAPIView,
                        RideAPIView,
                        ProfileAPIView,
                        ProfilesAPIView,
