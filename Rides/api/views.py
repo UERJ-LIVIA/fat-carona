@@ -1,7 +1,6 @@
 # DRF
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework import generics, mixins
 from rest_framework.generics import get_object_or_404
 from rest_framework import viewsets
@@ -64,16 +63,6 @@ class RideDetailAPIView(generics.GenericAPIView,
         return self.partial_update(request, *args, **kwargs)
 
 
-# metodo para filtrar caronas segundo usuario como passageiro
-class RidesFiltroAPIView(generics.ListAPIView):
-    queryset = Ride.objects.all()
-    serializer_class = RidesSerializer
-
-    def get_queryset(self):
-        # filtrar pelo nome de cada perfil vinculado ao user
-        return self.queryset.filter(passageiros__profile__icontains='Nome').all()
-
-
 """
 API de Perfis (v1)
 
@@ -89,7 +78,7 @@ class ProfilesAPIView(generics.ListCreateAPIView):
         return self.create(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        return self.get(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
 
 
 class ProfileDetailAPIView(
@@ -110,39 +99,6 @@ class ProfileDetailAPIView(
 
     def delete(self, request, *args, **Kwargs):
         return self.destroy(request, *args, **Kwargs)
-
-
-class PostProfileAPIView(generics.GenericAPIView,
-                         mixins.CreateModelMixin,
-                         ):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-    def post(self, request, *args, **kwargs):
-        data = request.data
-        new_profile = Profile.objects.create(
-            nome=data['nome'],
-            email=data['email'],
-            senha=data['senha'],
-            placa_carro=data['placa_carro'],
-            cnh=data['cnh'],
-            diretorio=data['diretorio'],
-            user=User.objects.get(pk=data['user'])
-        )
-        serializer = ProfileSerializer(new_profile, many=False)
-        return self.create(serializer, *args, **kwargs)
-
-
-class DeleteProfileAPIView(generics.GenericAPIView,
-                           mixins.DestroyModelMixin,
-                           ):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-    lookup_field = 'pk'
-
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
 
 
 """
@@ -172,19 +128,3 @@ class RidesViewSet(viewsets.ModelViewSet):
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-
-
-"""
-# Customizando as ViewSets de Profiles usando mixins!
-class ProfileViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.DestroyModelMixin,
-    viewsets.GenericViewSet
-):
-    queryset = Profile.objects.all()
-    serialiazer_class = ProfileSerializer
-
-"""
