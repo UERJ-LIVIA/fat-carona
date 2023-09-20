@@ -63,7 +63,7 @@ class RidesFiltroAPIView(generics.ListAPIView):
 
     def get_queryset(self):
         # filtrar pelo nome de cada perfil vinculado ao user
-        Ride.objects.filter(passageiros__profile__icontains='Nome').all()
+        return self.queryset.filter(passageiros__profile__icontains='Nome').all()
 
 
 """
