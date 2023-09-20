@@ -1,14 +1,14 @@
 from django.urls import path
-from rides.api.views import (RidesAPIView,
-                       RideAPIView,
-                       ProfileAPIView,
-                       ProfilesAPIView,
-                       PostProfileAPIView,
-                       DeleteProfileAPIView,
-                       RidesFiltroAPIView,
-                       RidesViewSet,
-                       ProfileViewSet
-                       )
+from .views import (RidesAPIView,
+                    RideAPIView,
+                    ProfileAPIView,
+                    ProfilesAPIView,
+                    PostProfileAPIView,
+                    DeleteProfileAPIView,
+                    RidesFiltroAPIView,
+                    RidesViewSet,
+                    ProfileViewSet
+                    )
 # DRF
 """
 from rest_framework.routers import SimpleRouter
