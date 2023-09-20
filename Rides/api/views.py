@@ -74,9 +74,9 @@ API de Perfis (v1)
 
 class ProfilesAPIView(generics.ListCreateAPIView,
                       mixins.RetrieveModelMixin):
+
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    lookup_field = 'pk'
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -85,14 +85,18 @@ class ProfilesAPIView(generics.ListCreateAPIView,
         return self.retrieve(request, *args, **kwargs)
 
 
-class ProfileDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ProfileDetailAPIView(
+        generics.GenericAPIView,
+        mixins.RetrieveModelMixin,
+        mixins.UpdateModelMixin,
+        mixins.DestroyModelMixin):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
     lookup_field = 'pk'
 
     def get(self, request, *args, **kwargs):
-        return self.retrive(request, *args, **kwargs)
+        return self.retrieve(request, *args, **kwargs)
 
     def patch(self, request, *args, **kwargs):
         return self.partial_update(request, *args, **kwargs)
