@@ -37,7 +37,7 @@ class RidesSerializer(serializers.ModelSerializer):
             instance, validated_data)
         instance.passageiros.clear()
         for passageiro in passageiros:
-            instance.passageiros.add(passageiros)
+            instance.passageiros.add(passageiro)
             return instance
 
     def get_nome_passageiros(self, obj):
