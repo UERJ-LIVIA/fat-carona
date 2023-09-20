@@ -35,11 +35,11 @@ class RidesAPIView(generics.ListCreateAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class RidDetailAPIView(generics.GenericAPIView,
-                       mixins.RetrieveModelMixin,
-                       mixins.DestroyModelMixin,
-                       mixins.UpdateModelMixin
-                       ):
+class RideDetailAPIView(generics.GenericAPIView,
+                        mixins.RetrieveModelMixin,
+                        mixins.DestroyModelMixin,
+                        mixins.UpdateModelMixin
+                        ):
 
     queryset = Ride.objects.all()
     serializer_class = RidesSerializer
@@ -59,7 +59,7 @@ class RidDetailAPIView(generics.GenericAPIView,
 # metodo para filtrar caronas segundo usuario como passageiro
 class RidesFiltroAPIView(generics.ListAPIView):
     queryset = Ride.objects.all()
-    serializer_class = ProfileSerializer
+    serializer_class = RidesSerializer
 
     def get_queryset(self):
         # filtrar pelo nome de cada perfil vinculado ao user
@@ -83,6 +83,22 @@ class ProfilesAPIView(generics.ListCreateAPIView,
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+
+class ProfileDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+    lookup_field = 'pk'
+
+    def get(self, request, *args, **kwargs):
+        return self.retrive(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **Kwargs):
+        return self.destroy(request, *args, **Kwargs)
 
 
 class PostProfileAPIView(generics.GenericAPIView,
@@ -116,22 +132,6 @@ class DeleteProfileAPIView(generics.GenericAPIView,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-
-
-class ProfileDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-
-    lookup_field = 'pk'
-
-    def get(self, request, *args, **kwargs):
-        return self.retrive(request, *args, **kwargs)
-
-    def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
-
-    def delete(self, request, *args, **Kwargs):
-        return self.destroy(request, *args, **Kwargs)
 
 
 """
