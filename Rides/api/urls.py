@@ -3,7 +3,7 @@ from .views import (RidesAPIView,
                     RideAPIView,
                     ProfileAPIView,
                     ProfilesAPIView,
-                    RidesFiltroAPIView, t
+                    RidesFiltroAPIView, 
                     )
 
 
