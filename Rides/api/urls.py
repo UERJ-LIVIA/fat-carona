@@ -9,15 +9,6 @@ from .views import (RidesAPIView,
                     RidesViewSet,
                     ProfileViewSet
                     )
-# DRF
-"""
-from rest_framework.routers import SimpleRouter
-
-router = SimpleRouter()
-router.register('rides', RidesViewSet)
-router.register('profiles', ProfileViewSet)
-
-"""
 
 
 # create your routes here !
