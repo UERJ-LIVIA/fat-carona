@@ -21,6 +21,14 @@ API de Rides (v1)
 class RidesAPIView(generics.ListCreateAPIView):
     """
     Listar Rides mediante filtro
+    Ref POST :
+    {
+    "modalidade": "DEFAULT",
+    "motorista": 7,
+    "data_saida": "2023-09-20T14:45:00Z",
+    "info": "Teste"
+}
+
     """
     queryset = Ride.objects.all()
     serializer_class = RidesSerializer
@@ -72,8 +80,7 @@ API de Perfis (v1)
 """
 
 
-class ProfilesAPIView(generics.ListCreateAPIView,
-                      mixins.RetrieveModelMixin):
+class ProfilesAPIView(generics.ListCreateAPIView):
 
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
@@ -82,7 +89,7 @@ class ProfilesAPIView(generics.ListCreateAPIView,
         return self.create(request, *args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+        return self.get(request, *args, **kwargs)
 
 
 class ProfileDetailAPIView(
