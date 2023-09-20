@@ -109,14 +109,14 @@ class PostProfileAPIView(generics.GenericAPIView,
 
 class DeleteProfileAPIView(generics.GenericAPIView,
                            mixins.DestroyModelMixin,
-                           mixins.CreateModelMixin):
+                           ):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
     lookup_field = 'pk'
 
     def delete(self, request, *args, **kwargs):
-       return self.destroy(request,*args,**kwargs)
+        return self.destroy(request, *args, **kwargs)
 
 
 class ProfileAPIView(generics.RetrieveUpdateDestroyAPIView):
@@ -125,11 +125,14 @@ class ProfileAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     lookup_field = 'pk'
 
-    def get_object(self):
-        if self.kwargs.get('Rides_pk'):
-            return get_object_or_404(self.get_queryset(), curso_id=self.kwargs.get('Rides_pk'),
-                                     pk=self.kwargs.get('profile_pk'))
-        return get_object_or_404(self.get_queryset(), pk=self.kwargs.get('profile_pk'))
+    def get(self, request, *args, **kwargs):
+        return self.retrive(request, *args, **kwargs)
+
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **Kwargs):
+        return self.destroy(request, *args, **Kwargs)
 
 
 """
