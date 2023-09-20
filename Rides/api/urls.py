@@ -1,9 +1,9 @@
 from django.urls import path
 from .views import (RidesAPIView,
-                    RideAPIView,
-                    ProfileAPIView,
+                    RidDetailAPIView,
+                    ProfileDetailAPIView,
                     ProfilesAPIView,
-                    RidesFiltroAPIView, 
+                    RidesFiltroAPIView,
                     )
 
 
@@ -12,8 +12,10 @@ from .views import (RidesAPIView,
 urlpatterns = [
     path('rides/', RidesAPIView.as_view(), name='rides'),
     path('rides/rides-filtro', RidesFiltroAPIView.as_view(), name='rides_filtro'),
-    path('rides/<int:pk>/', RideAPIView.as_view(), name='ride'),
-    path('profiles/', ProfilesAPIView.as_view(), name='profiles'),
+    path('rides/<int:pk>/', RidDetailAPIView.as_view(), name='ride'),
+    path('rides/<int:ride_pk>/profiles',  ProfilesAPIView.as_view(), name='curso_profiles'),
     path('rides/<int:ride_pk>/profiles/<int:profile_pk>',
-         ProfileAPIView.as_view(), name='curso_profiles')
+         ProfileDetailAPIView.as_view(), name='curso_profiles'),
+    path('profiles/', ProfilesAPIView.as_view(), name='profiles'),
+    
 ]

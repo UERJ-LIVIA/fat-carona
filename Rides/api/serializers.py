@@ -29,7 +29,7 @@ class RidesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ride
         fields = ['id', 'motorista', 'data_publicaçao',
-                  'data_saida', 'info', 'modalidade', 'passageiros', 'passageiros_id']
+                  'data_saida', 'info', 'modalidade', 'passageiro', 'passageiros_id']
 
     def update(self, instance, validated_data):
         passageiros = validated_data.pop('passageiros')

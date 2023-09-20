@@ -35,11 +35,11 @@ class RidesAPIView(generics.ListCreateAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class RideAPIView(generics.GenericAPIView,
-                  mixins.RetrieveModelMixin,
-                  mixins.DestroyModelMixin,
-                  mixins.UpdateModelMixin
-                  ):
+class RidDetailAPIView(generics.GenericAPIView,
+                       mixins.RetrieveModelMixin,
+                       mixins.DestroyModelMixin,
+                       mixins.UpdateModelMixin
+                       ):
 
     queryset = Ride.objects.all()
     serializer_class = RidesSerializer
@@ -72,9 +72,11 @@ API de Perfis (v1)
 """
 
 
-class ProfilesAPIView(generics.ListCreateAPIView):
+class ProfilesAPIView(generics.ListCreateAPIView,
+                      mixins.RetrieveModelMixin):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+    lookup_field = 'pk'
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
@@ -116,7 +118,7 @@ class DeleteProfileAPIView(generics.GenericAPIView,
         return self.destroy(request, *args, **kwargs)
 
 
-class ProfileAPIView(generics.RetrieveUpdateDestroyAPIView):
+class ProfileDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
