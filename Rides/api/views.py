@@ -29,13 +29,10 @@ class RidesAPIView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         dicionario_request = self.request.GET.dict()
-        print(dicionario_request)
         return self.queryset.filter(**dicionario_request)
 
-    def post(self, request):
-        serializer = RidesSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        return self.create(request, serializer.data, status=status.HTTP_201_CREATED)
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 class RideAPIView(generics.GenericAPIView,
