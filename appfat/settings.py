@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'rides',
     'accounts',
     'rest_framework',
-    'corsheaders'
-]
 
+]
 
 
 MIDDLEWARE = [
