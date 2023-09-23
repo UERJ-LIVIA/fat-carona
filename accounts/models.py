@@ -7,13 +7,25 @@ from django.utils.translation import gettext as _
 
 class Profile(mo.Model):
     class Genero(mo.TextChoices):
-     M = 'M', _('Masculino')
-     F = 'F', _('Feminino')
+        M = 'M', _('Masculino')
+        F = 'F', _('Feminino')
 
-    user = mo.OneToOneField(User, on_delete=mo.CASCADE)
+    class Tipos(mo.TextChoices):
+        PASSAGEIRO = 'PASSAGEIRO', _('Passageiro')
+        MOTORISTA = 'MOTORISTA', _('Motorista')
+
+    user = mo.ForeignKey(User, on_delete=mo.CASCADE)
     nome = mo.CharField(max_length=20)
-    idade = mo.IntegerField(max_length=3)
     email = mo.EmailField(max_length=50)
-    matricula = mo.IntegerField(max_length=20)
-    gender = mo.CharField(
-        max_length=12, choices=Genero.choices, default='Genero.M')
+    placa_carro = mo.CharField(max_length=8, null=True, blank=True)
+    cnh = mo.IntegerField(blank=True, null=True)
+    diretorio = mo. ImageField(upload_to=None, height_field=None,
+                               width_field=None,  blank=False,
+                               default='/rides/static/img')
+    senha = mo.CharField(max_length=50, default='*********')
+    # gender = mo.CharField(
+    #     max_length=12, choices=Genero.choices, default='Genero.M')
+    # tipos = mo.CharField(max_length=12, choices=Tipos.choices,
+    #                      default='Tipos.Passageiro')
+    # matricula = mo.IntegerField()
+    # idade = mo.IntegerField()
